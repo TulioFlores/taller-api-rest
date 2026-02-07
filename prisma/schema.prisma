@@ -9,3 +9,19 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+//crear nuestros modelos 
+
+model Producto {
+  id Int @id @default(autoincrement())
+  nombre String @unique 
+  precio Float @default(0)
+  createdAt DateTime @default(now())
+  categoria Categoria @relation(fields: [categoriaId], references : [id])
+  categoriaId Int
+}
+model Categoria {
+  id Int @id @default(autoincrement())
+  nombre String @unique 
+  productos Producto[]
+}
