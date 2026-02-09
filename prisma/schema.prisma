@@ -3,25 +3,11 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
-//crear nuestros modelos 
-
-model Producto {
-  id Int @id @default(autoincrement())
-  nombre String @unique 
-  precio Float @default(0)
-  createdAt DateTime @default(now())
-  categoria Categoria @relation(fields: [categoriaId], references : [id])
-  categoriaId Int
-}
-model Categoria {
-  id Int @id @default(autoincrement())
-  nombre String @unique 
-  productos Producto[]
-}
