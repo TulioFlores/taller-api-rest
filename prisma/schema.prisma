@@ -10,4 +10,17 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
-
+// Agregar nuestros modelos para las tablas de la BD
+model Producto {
+  id Int @id @default(autoincrement())
+  nombre String @unique 
+  precio Float @default(0)
+  createdAt DateTime @default(now())
+  categoria Categoria @relation(fields: [categoriaId], references : [id])
+  categoriaId Int
+}
+model Categoria {
+  id Int @id @default(autoincrement())
+  nombre String @unique 
+  productos Producto[]
+}
