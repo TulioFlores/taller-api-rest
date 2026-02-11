@@ -1,10 +1,11 @@
 import express from 'express'
-import productosRutas from './routes/productos.rutas.js';
-import categoriasRutas from './routes/categorias.rutas.js';
+import productosRutas from './routes/productos.routes.js';
+import categoriasRutas from './routes/categorias.routes.js';
+import { PrismaClient } from '@prisma/client';
 
 const app = express()
 app.use(express.json())
-
+const prisma = new PrismaClient;
 app.use("/api", productosRutas);
 app.use("/api", categoriasRutas);
 app.listen(3000);
