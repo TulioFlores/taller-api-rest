@@ -1,0 +1,14 @@
+# GET http://127.0.0.1:3000/api/productos
+# Content-Type: application/json
+
+
+# POST http://127.0.0.1:3000/api/productos
+# Content-Type: application/json
+
+# {
+#     "nombre" : "Laptop ASUS",
+#     "precio" : 6700,
+#     "categoriaId": 1
+# }
+
+GET http://127.0.0.1:3000/api/productos/1
