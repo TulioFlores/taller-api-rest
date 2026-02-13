@@ -8,14 +8,25 @@ router.get('/productos', async (req, res)=>{
     res.json(productos);
 });
 
-router.get('/productos/:id', async (req, res)=>{
-    const productoId = parseInt(req.params.id)
-    const productoEncontrado  = await prisma.producto.findFirst({
-        where:{
-            id: productoId
+router.get('/productos/:id', async (req, res) => {
+    try {
+        const productoId = parseInt(req.params.id)
+        const productoEncontrado = await prisma.producto.findFirst({
+            where: {
+                id: productoId
+            }
+        });
+        if(!productoEncontrado){
+            res.status(400).json({"msg": "Producto no encontrado"});
+        }else{
+            res.status(200).json(productoEncontrado);
         }
-    });
-    res.json(productoEncontrado);
+    } catch {
+        res.status(500).json({
+            "error": error.message
+        });
+    }
+
 });
 router.post('/productos', async (req, res)=>{
     try{
