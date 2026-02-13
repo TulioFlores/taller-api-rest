@@ -31,7 +31,12 @@ router.get('/productos/:id', async (req, res) => {
 router.post('/productos', async (req, res)=>{
     try{
         const nuevoProducto = await prisma.producto.create({
-            data: req.body
+            // data: req.body
+            data: {
+                "nombre" : req.body.nombre,
+                "precio" : parseFloat(req.body.precio),
+                "categoriaId" : parseInt(req.body.categoriaId)
+            }
         });
         res.status(201).json({
             "msg": "Se agregó el producto exitosamente"
@@ -44,4 +49,63 @@ router.post('/productos', async (req, res)=>{
     }
 });
 
+router.put('/productos/:id', async (req, res) => {
+    try {
+        const productoId = parseInt(req.params.id)
+        const productoEncontrado = await prisma.producto.findFirst({
+            where: {
+                id: productoId
+            }
+        });
+        if(!productoEncontrado){
+            res.status(400).json({"msg": "Producto no encontrado"});
+        }else{
+            const actualizarProducto = prisma.producto.update({
+                where:{
+                    id: productoId
+                },
+                data: {
+                    "nombre" : req.body.nombre,
+                    "precio" : parseFloat(req.body.precio),
+                    "categoriaId" : parseInt(req.body.categoriaId)
+                }
+            });
+            res.status(200).json({
+                "msg" : "Producto actualizado"
+            });
+        }
+    } catch {
+        res.status(500).json({
+            "error": error.message
+        });
+    }
+
+});
+router.delete('/productos/:id', async (req, res) => {
+    try {
+        const productoId = parseInt(req.params.id)
+        const productoEncontrado = await prisma.producto.findFirst({
+            where: {
+                id: productoId
+            }
+        });
+        if(!productoEncontrado){
+            res.status(400).json({"msg": "Producto no encontrado"});
+        }else{
+            const borrarProducto = prisma.producto.delete({
+                where:{
+                    id: productoId
+                }
+            });
+            res.status(200).json({
+                "msg" : "Producto eliminado"
+            });
+        }
+    } catch {
+        res.status(500).json({
+            "error": error.message
+        });
+    }
+
+});
 export default router;

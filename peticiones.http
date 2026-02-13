@@ -6,9 +6,12 @@
 # Content-Type: application/json
 
 # {
-#     "nombre" : "Laptop ASUS",
-#     "precio" : 6700,
-#     "categoriaId": 1
+#     "nombre" : "Laptop HP",
+#     "precio" : "6700",
+#     "categoriaId": "1"
 # }
 
-GET http://127.0.0.1:3000/api/productos/1
+# GET http://127.0.0.1:3000/api/productos/1
+
+DELETE http://127.0.0.1:3000/api/productos/1
+Content-Type: application/json
