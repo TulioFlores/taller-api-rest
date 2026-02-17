@@ -92,7 +92,7 @@ router.delete('/productos/:id', async (req, res) => {
         if(!productoEncontrado){
             res.status(400).json({"msg": "Producto no encontrado"});
         }else{
-            const borrarProducto = prisma.producto.delete({
+            const borrarProducto = await prisma.producto.delete({
                 where:{
                     id: productoId
                 }
